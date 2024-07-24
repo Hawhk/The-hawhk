@@ -9,7 +9,7 @@ public class Enemy extends DamageableMovableUnit {
 
     public Enemy(int x, int y, int velX, int velY, int width, int height, int health) {
         super(new Vector2D(x, y), width, height, health, new Vector2D(velX, velY));
-        this.health = 100;
+        this.health = health;
     }
 
     public void draw(Graphics g) {
@@ -22,9 +22,6 @@ public class Enemy extends DamageableMovableUnit {
 
 
     public void update() {
-        if (isDead()) {
-            return;
-        }
         move();
     }
 }

@@ -3,6 +3,8 @@ package game.unit;
 import utils.Moveable;
 import utils.Vector2D;
 
+import java.awt.*;
+
 public abstract class DamageableMovableUnit extends DamageableUnit implements Moveable {
 
     private Vector2D velocity;
@@ -16,7 +18,18 @@ public abstract class DamageableMovableUnit extends DamageableUnit implements Mo
     }
 
     @Override
+    public void draw(Graphics g) {
+        if (isDead()) {
+            return;
+        }
+        super.draw(g);
+    }
+
+    @Override
     public void move() {
+        if (isDead()) {
+            return;
+        }
         position = position.add(velocity);
     }
 

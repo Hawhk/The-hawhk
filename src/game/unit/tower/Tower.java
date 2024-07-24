@@ -3,6 +3,7 @@ package game.unit.tower;
 import game.Game;
 import game.unit.enemy.Enemy;
 import game.unit.projectile.Projectile;
+import game.unit.projectile.TargetProjectile;
 import utils.Vector2D;
 
 import java.awt.*;
@@ -94,7 +95,7 @@ public class Tower {
 
     private void fire(Enemy enemy) {
         if (firedCounter == 0) {
-            shots.add(new Projectile(position.copy(), enemy.getPosition(), projectileSpeed, projectileWidth, projectileHeight, damage));
+            shots.add(new TargetProjectile(position.copy(), enemy, projectileSpeed, projectileWidth, projectileHeight, damage));
             increaseFiredCounter();
         }
     }

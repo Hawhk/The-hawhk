@@ -19,13 +19,17 @@ public abstract class Unit {
     }
 
     static public boolean collides(Unit a, Unit b) {
-        boolean xOverlap = a.position.getX() < b.position.getX() + b.width &&
-                a.position.getX() + a.width > b.position.getX();
+        int leftA = a.position.getX() - a.width / 2;
+        int rightA = a.position.getX() + a.width / 2;
+        int topA = a.position.getY() - a.height / 2;
+        int bottomA = a.position.getY() + a.height / 2;
 
-        boolean yOverlap = a.position.getY() < b.position.getY() + b.height &&
-                a.position.getY() + a.height > b.position.getY();
+        int leftB = b.position.getX() - b.width / 2;
+        int rightB = b.position.getX() + b.width / 2;
+        int topB = b.position.getY() - b.height / 2;
+        int bottomB = b.position.getY() + b.height / 2;
 
-        return xOverlap && yOverlap;
+        return rightA >= leftB && leftA <= rightB && bottomA >= topB && topA <= bottomB;
     }
 
     public void draw(Graphics g) {
