@@ -20,7 +20,11 @@ public abstract class DamageableUnit extends Unit implements Damageable {
 
     @Override
     public void takeDamage(int damage) {
+        if (isDead()) {
+            return;
+        }
         health -= damage;
+        System.out.println("Unit took " + damage + " damage. Health: " + health);
     }
 
     @Override

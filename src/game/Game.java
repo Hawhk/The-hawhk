@@ -1,7 +1,9 @@
 package game;
 
+import game.unit.citadel.Citadel;
 import game.unit.enemy.Enemy;
 import game.unit.tower.Tower;
+import utils.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
 
     private final List<Tower> towers = new CopyOnWriteArrayList<>();
     private final List<Enemy> enemies = new CopyOnWriteArrayList<>();
+    private Citadel citadel = new Citadel(new Vector2D(100, 100), 50, 50, 100);
 
     public Game() {
         setPreferredSize(new Dimension(WINDOW_WITH, WINDOW_HEIGHT));
@@ -80,13 +83,15 @@ public class Game extends JPanel implements Runnable, MouseListener {
         enemies.forEach(enemy -> {
             enemy.draw(g);
         });
+
+        citadel.draw(g);
     }
 
     private void updateGame() {
         towers.forEach(tower -> tower.update(enemies));
         List<Enemy> removable = enemies.stream().filter(Enemy::isDead).toList();
         enemies.removeAll(removable);
-        enemies.forEach(Enemy::update);
+        enemies.forEach(enemy -> enemy.update(citadel));
     }
 
 
@@ -108,10 +113,10 @@ public class Game extends JPanel implements Runnable, MouseListener {
     public void mousePressed(MouseEvent e) {
         if (e.getButton() != MouseEvent.BUTTON1) {
             System.out.println("Mouse pressed at " + e.getX() + ", " + e.getY());
-            towers.add(new Tower(e.getX(), e.getY()));
+            towers.add(new Tower(e.getX(), e.getY(), 0.35f));
         } else {
             System.out.println("Left mouse button pressed at " + e.getX() + ", " + e.getY());
-            enemies.add(new Enemy(e.getX(), e.getY(), (int) (Math.random() * 10 - 5), (int) (Math.random() * 10 - 5), 50, 50, 50));
+            enemies.add(new Enemy(e.getX(), e.getY(), (int) 4, 50, 50, 50));
         }
     }
 

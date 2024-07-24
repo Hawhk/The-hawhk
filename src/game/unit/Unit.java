@@ -37,16 +37,20 @@ public abstract class Unit {
         g.fillRect(position.getX() - width / 2, position.getY() - height / 2, width, height);
     }
 
-    public void setPosition(Vector2D position) {
-        this.position = position;
-    }
-
     public boolean collidesWith(Unit other) {
         return collides(this, other);
     }
 
     public Vector2D getPosition() {
         return position;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
 }

@@ -1,6 +1,7 @@
 package game.unit.tower;
 
 import game.Game;
+import game.unit.Unit;
 import game.unit.enemy.Enemy;
 import game.unit.projectile.Projectile;
 import game.unit.projectile.TargetProjectile;
@@ -11,9 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Tower {
+public class Tower extends Unit {
 
-    private final Vector2D position;
     private final Color color;
     private final List<Projectile> shots = new CopyOnWriteArrayList<>();
 
@@ -29,7 +29,8 @@ public class Tower {
     private float firedCounter;
 
 
-    public Tower(int x, int y) {
+    public Tower(int x, int y, float fireRate) {
+        super(new Vector2D(x, y), 50, 50);
         this.position = new Vector2D(x, y);
         this.width = 50;
         this.height = 50;
@@ -38,11 +39,10 @@ public class Tower {
         this.projectileSpeed = 10;
         this.projectileWidth = 10;
         this.projectileHeight = 10;
-        this.fireRate = 0.6f;
+        this.fireRate = fireRate;
         this.firedCounter = 0;
         this.color = Color.BLUE;
     }
-
 
     public void update(List<Enemy> enemies) {
 
@@ -64,7 +64,7 @@ public class Tower {
         }
     }
 
-
+    @Override
     public void draw(Graphics g) {
 
         g.setColor(color);

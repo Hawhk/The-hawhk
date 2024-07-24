@@ -22,9 +22,9 @@ public class TargetProjectile extends Projectile {
             return;
         }
 
-        Vector2D targetPosition = target.getPosition();
-        Vector2D direction = targetPosition.subtract(position);
-        Vector2D velocity = direction.normalize().multiply(speed);
+        Vector2D center = position.add(new Vector2D(target.getWidth() / 2.f, target.getHeight() / 2.f));
+        Vector2D direction = target.getPosition().subtract(position).normalize();
+        Vector2D velocity = direction.multiply(speed);
         setVelocity(velocity);
 
         super.move();
