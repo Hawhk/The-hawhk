@@ -1,7 +1,7 @@
 package game;
 
-import game.enemy.Enemy;
-import game.tower.Tower;
+import game.unit.enemy.Enemy;
+import game.unit.tower.Tower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,7 +65,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
             // Print FPS to console every second
             if (System.currentTimeMillis() - lastTimer > 1000) {
                 lastTimer += 1000;
-                System.out.println("FPS: " + frames);
+                System.out.println("Last second FPS: " + frames);
                 frames = 0;
             }
         }
@@ -84,14 +84,13 @@ public class Game extends JPanel implements Runnable, MouseListener {
 
     private void updateGame() {
         towers.forEach(tower -> tower.update(enemies));
-        List<Enemy> removable = enemies.stream().filter(enemy -> !enemy.isAlive()).toList();
+        List<Enemy> removable = enemies.stream().filter(Enemy::isDead).toList();
         enemies.removeAll(removable);
         enemies.forEach(Enemy::update);
     }
 
 
     public static void main(String[] args) {
-
         JFrame frame = new JFrame("Game");
         Game game = new Game();
         frame.add(game);
@@ -112,7 +111,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
             towers.add(new Tower(e.getX(), e.getY()));
         } else {
             System.out.println("Left mouse button pressed at " + e.getX() + ", " + e.getY());
-            enemies.add(new Enemy(e.getX(), e.getY(), (int) (Math.random() * 10 - 5), (int) (Math.random() * 10 - 5)));
+            enemies.add(new Enemy(e.getX(), e.getY(), (int) (Math.random() * 10 - 5), (int) (Math.random() * 10 - 5), 50, 50, 50));
         }
     }
 

@@ -1,21 +1,24 @@
-package utils;
+package game.unit;
 
-public abstract class Movable {
+import utils.Vector2D;
+
+import java.awt.*;
+
+public abstract class Unit {
 
     protected Vector2D position;
-    protected Vector2D velocity;
     protected final int width;
     protected final int height;
 
-    public Movable(Vector2D position, Vector2D velocity, int width, int height) {
+    public Unit(Vector2D position, int width, int height) {
         this.position = position;
-        this.velocity = velocity;
+
         this.width = width;
         this.height = height;
 
     }
 
-    static public boolean collides(Movable a, Movable b) {
+    static public boolean collides(Unit a, Unit b) {
         boolean xOverlap = a.position.getX() < b.position.getX() + b.width &&
                 a.position.getX() + a.width > b.position.getX();
 
@@ -25,19 +28,16 @@ public abstract class Movable {
         return xOverlap && yOverlap;
     }
 
-    public void move() {
-        position = position.add(velocity);
-    }
-
-    public void setVelocity(Vector2D velocity) {
-        this.velocity = velocity;
+    public void draw(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillRect(position.getX() - width / 2, position.getY() - height / 2, width, height);
     }
 
     public void setPosition(Vector2D position) {
         this.position = position;
     }
 
-    public boolean collidesWith(Movable other) {
+    public boolean collidesWith(Unit other) {
         return collides(this, other);
     }
 
